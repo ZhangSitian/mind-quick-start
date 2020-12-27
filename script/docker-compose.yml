@@ -1,0 +1,74 @@
+version: '3'
+
+
+services:
+
+  mind-nginx:
+    image: nginx
+    container_name: mind-nginx
+    depends_on:
+      - mind-gate
+    volumes:
+      - ../conf/nginx:/etc/nginx/conf.d
+      - ../html:/usr/share/nginx/html
+      - ../logs/nginx:/var/log/nginx
+    networks:
+      - mind-net
+    ports:
+      - 80:80
+      - 8070:8070
+
+  mind-gate:
+    image: tomcat
+    container_name: mind-gate
+    depends_on:
+      - apollo-db
+      - mind-apollo
+      - mind-redis
+    volumes:
+      - ../webapps/:/usr/local/tomcat/webapps/
+    networks:
+      - mind-net
+    expose:
+      - 8080
+
+  mind-apollo:
+    image: nobodyiam/apollo-quick-start
+    container_name: mind-apollo
+    depends_on:
+      - apollo-db
+    networks:
+      - mind-net
+    expose:
+      - 8080
+      - 8070
+
+  mind-redis:
+    image: redis
+    container_name: mind-redis
+    volumes:
+      - ../data/redis:/data
+      - ../conf/redis:/usr/local/etc/redis
+      - ../logs/redis:/logs
+    networks:
+      - mind-net
+    expose:
+      - 6379
+
+  apollo-db:
+    image: mysql:5.7
+    container_name: apollo-db
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+      - ../data/mysql:/var/lib/mysql
+    networks:
+      - mind-net
+    expose:
+      - 3306
+
+
+networks:
+  mind-net:
