@@ -17,6 +17,9 @@ services:
     ports:
       - 80:80
       - 8070:8070
+    command:
+      - chown -R nginx:nginx /var/log/nginx
+      - mkdir /etc/nginx/html
 
   mind-gate:
     image: tomcat
