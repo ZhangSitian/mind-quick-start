@@ -10,16 +10,13 @@ services:
       - mind-gate
     volumes:
       - ../conf/nginx:/etc/nginx/conf.d
-      - ../html:/usr/share/nginx/html
+      - ../html:/etc/nginx/nginx/html
       - ../logs/nginx:/var/log/nginx
     networks:
       - mind-net
     ports:
       - 80:80
       - 8070:8070
-    command:
-      - chown -R nginx:nginx /var/log/nginx
-      - mkdir /etc/nginx/html
 
   mind-gate:
     image: tomcat
