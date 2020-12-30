@@ -27,6 +27,7 @@ services:
       - mind-redis
     volumes:
       - ../webapps/:/usr/local/tomcat/webapps/
+      - ../logs/app:/var/log/app
     networks:
       - mind-net
     expose:
