@@ -6,6 +6,8 @@ services:
   mind-nginx:
     image: nginx
     container_name: mind-nginx
+    environment:
+      TZ: Asia/Shanghai
     depends_on:
       - mind-gate
     volumes:
@@ -21,6 +23,8 @@ services:
   mind-gate:
     image: tomcat
     container_name: mind-gate
+    environment:
+      TZ: Asia/Shanghai
     depends_on:
       - apollo-db
       - mind-apollo
@@ -36,6 +40,8 @@ services:
   mind-apollo:
     image: nobodyiam/apollo-quick-start
     container_name: mind-apollo
+    environment:
+      TZ: Asia/Shanghai
     depends_on:
       - apollo-db
     networks:
@@ -47,6 +53,8 @@ services:
   mind-redis:
     image: redis
     container_name: mind-redis
+    environment:
+      TZ: Asia/Shanghai
     volumes:
       - ../data/redis:/data
       - ../conf/redis:/usr/local/etc/redis
