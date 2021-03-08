@@ -10,8 +10,12 @@ services:
       TZ: Asia/Shanghai
     depends_on:
       - mind-gate
+      - apollo-db
+      - mind-apollo
+      - mind-redis
     volumes:
       - ../conf/nginx:/etc/nginx/conf.d
+      - ../conf/nginx.conf:/etc/nginx/nginx.conf
       - ../html:/etc/nginx/nginx/html
       - ../logs/nginx:/var/log/nginx
     networks:
@@ -19,6 +23,8 @@ services:
     ports:
       - 80:80
       - 8070:8070
+      - 3306:3306
+      - 6379:6379
 
   mind-gate:
     image: tomcat
