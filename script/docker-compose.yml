@@ -4,7 +4,7 @@ version: '3'
 services:
 
   mind-nginx:
-    image: nginx
+    image: nginx:stable
     container_name: mind-nginx
     environment:
       TZ: Asia/Shanghai
@@ -27,7 +27,7 @@ services:
       - 6379:6379
 
   mind-gate:
-    image: tomcat
+    image: tomcat:9.0.44-jdk8-adoptopenjdk-openj9
     container_name: mind-gate
     environment:
       TZ: Asia/Shanghai
@@ -57,7 +57,7 @@ services:
       - 8070
 
   mind-redis:
-    image: redis
+    image: redis:latest
     container_name: mind-redis
     environment:
       TZ: Asia/Shanghai
